@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat realtime NodeJS demo</title>
+
+
+    <script src="socket.io/socket.io.js"></script>
+   
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+<fieldset>
+    <legend>Demo chat realtime NodeJS</legend>
+    <input type="text" id="calculator" name="calculator" placeholder="Enter name">
+    <br>
+   
+    <button id="sendOne">SENDAll</button>
+    <p id ="content"></p>
+    <button id = "sendAll">SENDOne</button>
+</fieldset>
+
+</body>
+<script>
+    $(function () {
+   
+    var socket = io()
+
+    socket.on("kqSendOne", function (kq) {
+        console.log(kq)
+        $("#content").append("<p class='message'>" +"tổng" + kq.kqTong + ": " + "tích" + kq.kqTich + "</p>")
+    })
+    socket.on("kqSendAll", function (kq) {
+        console.log(kq)
+        $("#content").append("<p class='message'>" + kq.kqTong + ": " + kq.kqTich + "</p>")
+    })
+
+    $("#sendOne").on('click', function () {
+        var calculator = $('#calculator').val();
+        socket.emit("sendOne", calculator);
+    })
+    $("#sendAll").on('click', function () {
+        var calculator = $('#calculator').val();
+        socket.emit("sendAll", calculator);
+    })
+})
+</script>
+</html>
